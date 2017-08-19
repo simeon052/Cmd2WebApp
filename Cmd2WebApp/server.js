@@ -2,7 +2,7 @@
 var fs = require('fs');
 var http = require('http');
 var port = process.env.PORT || 1337;
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 
 var server = http.createServer(function (req, res) {
     res.writeHead(200, { "Content-Type": "text/html" });
@@ -18,15 +18,18 @@ io.sockets.on("connection", function (socket) {
     });
 
     socket.on("execOnServer", function (data) {
-        exec('dir', (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-                return;
-            }
-            io.sockets.emit("ServerMsg", { value: stdout.toString() });
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
+        var execOut = spawn('..\\Cmd2Web\\bin\\Debug\\Cmd2Web.exe');
+
+        execOut.stdout.on('data', function (data) {
+            io.sockets.emit("ServerMsg", { value: data.toString("utf-8") });
+            console.log(`stdout: ${data.toString("utf-8")}`);
         });
+
+        execOut.on('exit', function (code) {
+            console.log(code.toString());
+            io.sockets.emit("ServerMsg", { value: "Exec is done : " + code.toString() });
+        });
+
         io.sockets.emit("ServerMsg", { value: "Message from client via Server : " + data });
     });
 });
