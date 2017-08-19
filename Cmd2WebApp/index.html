@@ -12,7 +12,7 @@
     <hr />
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-        var sio = io.connect('http://localhost:1337');
+        var sio = io();
 
         sio.on("ServerMsg", function (data) { dispMessage(data.value); });
 
