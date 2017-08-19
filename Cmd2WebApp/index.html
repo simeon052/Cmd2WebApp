@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Exe2WebApp Test</title>
+</head>
+<body>
+    <button onclick="startExec();">Start</button>
+    <hr />
+    <div id="msg"></div>
+    <hr />
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        var sio = io.connect('http://localhost:1337');
+
+        sio.on("ServerMsg", function (data) { dispMessage(data.value); });
+
+        function startExec() {
+            sio.emit("execOnServer", "test");
+        }
+
+        function dispMessage(msg) {
+            var domMeg = document.createElement('div');
+            domMeg.innerHTML = msg;
+            document.getElementById("msg").appendChild(domMeg);
+        }
+
+    </script>
+
+
+</body>
+</html>
