@@ -17,6 +17,6 @@ io.sockets.on("connection", function (socket) {
     });
 
     socket.on("execOnServer", function (data) {
-        io.sockets.emit("ServerMsg", { value: "Message from Server : " + data.value });
+        io.sockets.emit("ServerMsg", { value: "Message from client via Server : " + data });
     });
 });
