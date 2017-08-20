@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cmd2Web2
@@ -16,6 +17,7 @@ namespace Cmd2Web2
             foreach(var s in keyword)
             {
                 Console.WriteLine($"{s}");
+                Thread.Sleep(1);
             }
         }
     }

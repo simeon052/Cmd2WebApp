@@ -36,7 +36,7 @@ io.sockets.on("connection", function (socket) {
             io.sockets.emit("ServerMsg", { value: "Exec is done : " + code.toString() });
         });
 
-        io.sockets.emit("ServerMsg", { value: "Message from client via Server : " + data });
+        io.sockets.emit("ServerMsg", { value: "Param from client : " + data });
     });
 });
 

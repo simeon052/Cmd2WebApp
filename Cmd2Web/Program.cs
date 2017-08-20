@@ -12,13 +12,16 @@ namespace Cmd2Web
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = new UTF8Encoding();
-            var di = new DirectoryInfo(@".\images");
-            foreach(var f in di.GetFiles("*.jpg", SearchOption.TopDirectoryOnly))
-            {
-                //                Console.WriteLine($"Message from command line :  {i} - {args[0] ?? ""}");
-                Console.WriteLine($"<a href = \"images\\{f.Name}\" >{f.Name}</a>");
-                Thread.Sleep(500);
+            if (args.Count() >= 1){
+                Console.OutputEncoding = new UTF8Encoding();
+                Console.WriteLine(args[0]);
+                var str = args[0].Trim();
+                var di = new DirectoryInfo(@".\images");
+                foreach (var f in di.GetFiles("*.*", SearchOption.TopDirectoryOnly).Where(f => { return f.Name.Contains(str); }))
+                {
+                    Console.WriteLine($"<a href = \"images\\{f.Name}\" >{f.Name}</a>");
+                    Thread.Sleep(100);
+                }
             }
         }
     }
