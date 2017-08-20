@@ -6,6 +6,7 @@
     <title>Exe2WebApp Test</title>
 </head>
 <body>
+    <input type="text" id="input_str" style="width:200px"/>
     <button onclick="startExec();">Start</button>
     <hr />
     <div id="msg"></div>
@@ -17,7 +18,7 @@
         sio.on("ServerMsg", function (data) { dispMessage(data.value); });
 
         function startExec() {
-            sio.emit("execOnServer", "test");
+            sio.emit("execOnServer", document.getElementById('input_str').value);
         }
 
         function dispMessage(msg) {
