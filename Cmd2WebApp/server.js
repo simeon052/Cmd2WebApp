@@ -14,7 +14,12 @@ var io = require("socket.io").listen(server);
 io.sockets.on("connection", function (socket) {
 
     socket.on("connected", function (value) {
+        var execOut2 = spawn('..\\Cmd2Web2\\bin\\Debug\\Cmd2Web2.exe');
 
+        execOut2.stdout.on('data', function (data) {
+            io.sockets.emit("ListFromServer", { value: data.toString("utf-8") });
+            console.log(`stdout: ${data.toString("utf-8")}`);
+        });
     });
 
     socket.on("execOnServer", function (data) {
@@ -22,6 +27,7 @@ io.sockets.on("connection", function (socket) {
 
         execOut.stdout.on('data', function (data) {
             io.sockets.emit("ServerMsg", { value: data.toString("utf-8") });
+
             console.log(`stdout: ${data.toString("utf-8")}`);
         });
 

@@ -17,6 +17,10 @@
 
         sio.on("ServerMsg", function (data) { dispMessage(data.value); });
 
+        sio.on("ListFromServer", function (data) { console.log(data.value); });
+
+        sio.emit("connected");
+
         function startExec() {
             sio.emit("execOnServer", document.getElementById('input_str').value);
         }
