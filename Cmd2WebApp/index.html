@@ -6,7 +6,11 @@
     <title>Exe2WebApp Test</title>
 </head>
 <body>
-    <input type="text" id="input_str" style="width:200px"/>
+<hr/>
+<form name="formname">
+    <select id="Slist" name="selectName"></select>
+</form>
+<hr />
     <button onclick="startExec();">Start</button>
     <hr />
     <div id="msg"></div>
@@ -17,8 +21,16 @@
 
         sio.on("ServerMsg", function (data) { dispMessage(data.value); });
 
+        sio.on("ListFromServer", function (data) {
+            console.log(data.value);
+            var list = document.forms.formname.selectName;
+            list.appendChild(new Option(data.value, data.value));
+        });
+
+        sio.emit("connected");
+
         function startExec() {
-            sio.emit("execOnServer", document.getElementById('input_str').value);
+            sio.emit("execOnServer", document.forms.formname.selectName.value);
         }
 
         function dispMessage(msg) {
