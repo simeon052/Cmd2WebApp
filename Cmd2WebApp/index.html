@@ -6,18 +6,19 @@
     <title>Exe2WebApp Test</title>
 </head>
 <body>
+    <input type="text" id="input_str" style="width:200px"/>
     <button onclick="startExec();">Start</button>
     <hr />
     <div id="msg"></div>
     <hr />
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-        var sio = io.connect('http://localhost:1337');
+        var sio = io();
 
         sio.on("ServerMsg", function (data) { dispMessage(data.value); });
 
         function startExec() {
-            sio.emit("execOnServer", "test");
+            sio.emit("execOnServer", document.getElementById('input_str').value);
         }
 
         function dispMessage(msg) {
